@@ -1,0 +1,45 @@
+<?php 
+
+class Koneksi {
+	public $host = 'localhost',
+					$username = 'root',
+					$pass ='',
+					$database = 'school';
+	public $conn;
+
+	public function __construct() {
+		$this->conn = mysqli_connect($this->host,$this->username,$this->pass,$this->database);
+	}
+    
+  public function tampilData($query) {
+		$result = mysqli_query($this->conn, $query);
+		while ($row = mysqli_fetch_assoc($result)) {
+				$rows[] = $row;
+		}
+		return $rows;
+  }     
+  public function tambahJurusan($data) {
+		$ID_JURUSAN_2 = $data["ID_JURUSAN_2"];
+    $NAMA_JURUSAN = $data["NAMA_JURUSAN"];
+    $KEPALA_JURUSAN = $data['KEPALA_JURUSAN'];
+    
+    
+
+		$query = "INSERT INTO jurusan VALUES('$ID_JURUSAN_2','$NAMA_JURUSAN','$KEPALA_JURUSAN')";
+		mysqli_query($this->conn, $query);
+
+		return mysqli_affected_rows($this->conn);
+	}       
+	 public function tambahsiswa($data) {
+		$NIS = $data["NIS"];
+    $NAMA_SISWA = $data["NAMA_SISWA"];
+    $NAMA_JURUSAN = $data['NAMA_JURUSAN'];
+    $ALAMAT = $data['ALAMAT'];
+
+    
+    $query = "INSERT INTO siswa VALUES('$NIS','$NAMA_SISWA','$NAMA_JURUSAN','$ALAMAT')";
+		mysqli_query($this->conn, $query);
+
+		return mysqli_affected_rows($this->conn);
+	}       
+}
